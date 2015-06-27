@@ -1,0 +1,4 @@
+export CLIENT_ID="<REPLACE ME>"
+export CLIENT_SECRET="<REPLACE ME>"
+export REDIRECT_URI="http://localhost:4000/auth/callback"
+export GITHUB_ORGANIZATION="spartansystems"
