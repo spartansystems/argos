@@ -6,6 +6,7 @@ defmodule Panoptes.Router do
     plug :fetch_session
     plug :fetch_flash
     plug :protect_from_forgery
+    plug :assign_current_user
   end
 
   pipeline :api do
@@ -18,8 +19,14 @@ defmodule Panoptes.Router do
     get "/", PageController, :index
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", Panoptes do
-  #   pipe_through :api
-  # end
+  scope "/auth", Panoptes do
+    pipe_through :browser
+    get "/", AuthController, :index
+    get "/callback", AuthController, :callback
+    get "/logout", AuthController, :logout
+  end
+
+  defp assign_current_user(conn, _) do
+    assign(conn, :current_user, get_session(conn, :current_user))
+  end
 end
